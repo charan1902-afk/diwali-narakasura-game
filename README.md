@@ -1,2 +1,2 @@
-# diwali-narakasura-game
+# Index.html
 Interactive Diwali game - Satyabhama vs Narakasura
