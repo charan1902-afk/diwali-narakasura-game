@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diwali Celebration - Victory of Light over Darkness</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Cinzel", serif;
+        background: linear-gradient(135deg, #ff8c00, #ffd700, #dc143c);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-x: hidden;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        min-height: 600px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        border: 8px solid #ffd700;
+        box-shadow: 0 0 30px rgba(255, 140, 0, 0.5);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .decorative-border {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: radial-gradient(
+            circle at 20px 20px,
+            #ffd700 2px,
+            transparent 2px
+          ),
+          radial-gradient(circle at 60px 60px, #ff8c00 1px, transparent 1px);
+        background-size: 80px 80px, 40px 40px;
+        opacity: 0.1;
+        pointer-events: none;
+      }
+
+      .stage {
+        display: none;
+        padding: 40px;
+        text-align: center;
+        position: relative;
+        z-index: 10;
+      }
+
+      .stage.active {
+        display: block;
+      }
+
+      .stage h1 {
+        color: #dc143c;
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        font-weight: 700;
+      }
+
+      .stage h2 {
+        color: #ff8c00;
+        font-size: 1.8em;
+        margin-bottom: 15px;
+        font-weight: 600;
+      }
+
+      .stage p {
+        color: #333;
+        font-size: 1.2em;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin: 20px 0;
+        text-align: left;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .form-group label {
+        display: block;
+        color: #dc143c;
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 1.1em;
+      }
+
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 12px;
+        border: 3px solid #ffd700;
+        border-radius: 10px;
+        font-size: 1.1em;
+        font-family: inherit;
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .btn {
+        background: linear-gradient(45deg, #ff8c00, #ffd700);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.2em;
+        font-weight: 600;
+        border-radius: 15px;
+        cursor: pointer;
+        margin: 10px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 140, 0, 0.4);
+        font-family: inherit;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 140, 0, 0.6);
+      }
+
+      .btn:active {
+        transform: translateY(0);
+      }
+
+      .game-canvas {
+        border: 4px solid #ffd700;
+        border-radius: 15px;
+        margin: 20px auto;
+        display: block;
+        background: linear-gradient(180deg, #87ceeb, #228b22);
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .game-ui {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .game-stat {
+        background: rgba(255, 215, 0, 0.2);
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: 2px solid #ffd700;
+        margin: 5px;
+      }
+
+      .game-stat label {
+        color: #dc143c;
+        font-weight: 600;
+        margin-right: 10px;
+      }
+
+      .game-stat span {
+        color: #ff8c00;
+        font-weight: 700;
+        font-size: 1.2em;
+      }
+
+      .floating-diya {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background: radial-gradient(circle, #ffd700, #ff8c00);
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        animation: float 6s ease-in-out infinite;
+        opacity: 0.7;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+        }
+      }
+
+      .floating-diya:before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        left: 50%;
+        width: 8px;
+        height: 10px;
+        background: #ff4500;
+        border-radius: 50%;
+        transform: translateX(-50%);
+      }
+
+      .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: #ffd700;
+        border-radius: 50%;
+        pointer-events: none;
+      }
+
+      .victory-animation {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1000;
+      }
+
+      .firework {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        animation: firework 2s ease-out forwards;
+      }
+
+      @keyframes firework {
+        0% {
+          transform: scale(0);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(20);
+          opacity: 0;
+        }
+      }
+
+      .story-text {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: left;
+        background: rgba(255, 215, 0, 0.1);
+        padding: 20px;
+        border-radius: 15px;
+        border: 2px solid #ffd700;
+      }
+
+      .multilingual-text {
+        font-family: "Noto Sans Devanagari", "Cinzel", serif;
+        font-size: 1.3em;
+        line-height: 1.8;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          width: 95%;
+          margin: 10px;
+        }
+
+        .stage {
+          padding: 20px;
+        }
+
+        .stage h1 {
+          font-size: 2em;
+        }
+
+        .game-ui {
+          flex-direction: column;
+        }
+
+        .game-canvas {
+          width: 100%;
+          height: 300px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="decorative-border"></div>
+
+      <!-- Floating Diyas -->
+      <div
+        class="floating-diya"
+        style="top: 10%; left: 10%; animation-delay: 0s"
+      ></div>
+      <div
+        class="floating-diya"
+        style="top: 20%; right: 15%; animation-delay: 2s"
+      ></div>
+      <div
+        class="floating-diya"
+        style="bottom: 15%; left: 20%; animation-delay: 4s"
+      ></div>
+      <div
+        class="floating-diya"
+        style="bottom: 25%; right: 10%; animation-delay: 1s"
+      ></div>
+
+      <!-- Stage 1: Welcome -->
+      <div class="stage active" id="welcome-stage">
+        <h1>🪔 Diwali Celebration 🪔</h1>
+        <h2>Victory of Light over Darkness</h2>
+        <p>
+          Welcome to the sacred story of Naraka Chaturdashi! Join Devi
+          Satyabhama in her divine mission to defeat the demon Narakasura and
+          restore peace to the world.
+        </p>
+
+        <div class="form-group">
+          <label for="user-name">Your Name:</label>
+          <input
+            type="text"
+            id="user-name"
+            placeholder="Enter your name"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="language-select">Choose Your Language:</label>
+          <select id="language-select">
+            <option value="en">English</option>
+            <option value="hi">हिंदी (Hindi)</option>
+            <option value="ta">தமிழ் (Tamil)</option>
+            <option value="te">తెలుగు (Telugu)</option>
+            <option value="bn">বাংলা (Bengali)</option>
+            <option value="gu">ગુજરાતી (Gujarati)</option>
+            <option value="mr">मराठी (Marathi)</option>
+            <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+          </select>
+        </div>
+
+        <button class="btn" onclick="showDiwaliWish()">
+          Begin Celebration 🎆
+        </button>
+      </div>
+
+      <!-- Stage 2: Diwali Wish -->
+      <div class="stage" id="wish-stage">
+        <h1>🌟 Happy Diwali! 🌟</h1>
+        <div id="diwali-message" class="multilingual-text"></div>
+        <button class="btn" onclick="showStory()">Continue to Story 📖</button>
+      </div>
+
+      <!-- Stage 3: Story -->
+      <div class="stage" id="story-stage">
+        <h1>🏹 The Legend of Satyabhama 🏹</h1>
+        <div class="story-text">
+          <p>
+            <strong
+              >Long ago, a powerful demon named Narakasura terrorized both
+              heaven and earth...</strong
+            >
+          </p>
+          <p>
+            He imprisoned 16,000 innocent women and stole precious artifacts,
+            including the divine earrings of Aditi, mother of the gods. His evil
+            knew no bounds!
+          </p>
+          <p>
+            When Devi Satyabhama, wife of Lord Krishna and incarnation of Mother
+            Earth, learned of these atrocities, her divine fury was ignited!
+          </p>
+          <p>
+            <strong
+              >Now, you must help Satyabhama use her divine arrows to defeat the
+              demon and restore justice!</strong
+            >
+          </p>
+        </div>
+        <div id="game-instructions" class="multilingual-text"></div>
+        <button class="btn" onclick="startGame()">Begin Battle ⚔️</button>
+      </div>
+
+      <!-- Stage 4: Game -->
+      <div class="stage" id="game-stage">
+        <h1>🏹 Battle Against Narakasura 🏹</h1>
+        <div class="game-ui">
+          <div class="game-stat">
+            <label>Arrows:</label>
+            <span id="arrows-count">3</span>
+          </div>
+          <div class="game-stat">
+            <label>Narakasura Health:</label>
+            <span id="enemy-health">5</span>
+          </div>
+          <div class="game-stat">
+            <label>Score:</label>
+            <span id="score">0</span>
+          </div>
+        </div>
+        <canvas
+          class="game-canvas"
+          id="game-canvas"
+          width="800"
+          height="400"
+        ></canvas>
+        <p><strong>Click and hold to aim, release to shoot!</strong></p>
+        <button class="btn" onclick="resetGame()">Reset Game 🔄</button>
+      </div>
+
+      <!-- Stage 5: Victory -->
+      <div class="stage" id="victory-stage">
+        <h1>🎆 Victory! 🎆</h1>
+        <div id="victory-message" class="multilingual-text"></div>
+        <p>
+          <strong
+            >Light has triumphed over darkness! The demon Narakasura has been
+            defeated!</strong
+          >
+        </p>
+        <p>
+          🪔 May this Diwali bring joy, prosperity, and happiness to you and
+          your loved ones! 🪔
+        </p>
+        <button class="btn" onclick="playAgain()">Play Again 🎮</button>
+        <button class="btn" onclick="shareVictory()">Share Victory 📱</button>
+      </div>
+
+      <div class="victory-animation" id="victory-animation"></div>
+    </div>
+
+    <script>
+      // Language translations
+      const translations = {
+        en: {
+          diwali_wish:
+            "Happy Diwali! May this festival of lights bring joy and prosperity to {name}!",
+          victory_message:
+            "Congratulations {name}! You have helped Satyabhama defeat the demon Narakasura!",
+          game_instructions:
+            "Click and hold to aim, release to shoot. Help Satyabhama defeat Narakasura with divine arrows!",
+        },
+        hi: {
+          diwali_wish:
+            "दीपावली की हार्दिक शुभकामनाएं {name}! यह प्रकाश का त्योहार आपके जीवन में खुशियां लाए!",
+          victory_message:
+            "बधाई हो {name}! आपने सत्यभामा की नरकासुर को हराने में सहायता की!",
+          game_instructions:
+            "निशाना लगाने के लिए दबाएं, छोड़ने के लिए शूट करें। सत्यभामा को नरकासुर को हराने में सहायता करें!",
+        },
+        ta: {
+          diwali_wish:
+            "தீபாவளி வாழ்த்துக்கள் {name}! இந்த ஒளி திருநாள் உங்களுக்கு மகிழ்ச்சியை கொண்டு வரட்டும்!",
+          victory_message:
+            "வாழ்த்துக்கள் {name}! நீங்கள் சத்யபாமா நரகாசுரனை வெல்ல உதவினீர்கள்!",
+          game_instructions:
+            "குறிவைக்க அழுத்தி பிடிக்கவும், விடுதலை செய்ய சுடவும். சத்யபாமா நரகாசுரனை தோற்கடிக்க உதவுங்கள்!",
+        },
+        te: {
+          diwali_wish:
+            "దీపావళి శుభాకాంక్షలు {name}! ఈ దీపాల పండుగ మీ జీవితానికి ఆనందం తీసుకురావాలి!",
+          victory_message:
+            "అభినందనలు {name}! మీరు సత్యభామ నరకాసురుడిని ఓడించడంలో సహాయం చేశారు!",
+          game_instructions:
+            "లక్ష్యం చేయడానికి నొక్కండి, విడుదల చేయడానికి కాల్చండి. సత్యభామ నరకాసురుడిని ఓడించడంలో సహాయం చేయండి!",
+        },
+        bn: {
+          diwali_wish:
+            "শুভ দীপাবলি {name}! আলোর এই উৎসব আপনার জীবনে আনন্দ নিয়ে আসুক!",
+          victory_message:
+            "অভিনন্দন {name}! আপনি সত্যভামাকে নরকাসুর পরাজিত করতে সাহায্য করেছেন!",
+          game_instructions:
+            "লক্ষ্য করতে চেপে ধরুন, ছাড়তে গুলি করুন। সত্যভামাকে নরকাসুর পরাজিত করতে সাহায্য করুন!",
+        },
+        gu: {
+          diwali_wish:
+            "દિવાળીની શુભકામનાઓ {name}! પ્રકાશનો આ તહેવાર તમારા જીવનમાં આનંદ લાવે!",
+          victory_message:
+            "અભિનંદન {name}! તમે સત્યભામાને નરકાસુરને હરાવવામાં મદદ કરી!",
+          game_instructions:
+            "લક્ષ્ય રાખવા દબાવી રાખો, છોડવા માટે શૂટ કરો. સત્યભામાને નરકાસુરને હરાવવામાં મદદ કરો!",
+        },
+        mr: {
+          diwali_wish:
+            "दिवाळीच्या हार्दिक शुभेच्छा {name}! प्रकाशाचा हा सण तुमच्या आयुष्यात आनंद आणो!",
+          victory_message:
+            "अभिनंदन {name}! तुम्ही सत्यभामाला नरकासुराला हरवण्यात मदत केली!",
+          game_instructions:
+            "लक्ष्य करण्यासाठी दाबा आणि धरा, सोडण्यासाठी शूट करा. सत्यभामाला नरकासुराला हरवण्यात मदत करा!",
+        },
+        pa: {
+          diwali_wish:
+            "ਦਿਵਾਲੀ ਦੀਆਂ ਮੁਬਾਰਕਾਂ {name}! ਰੋਸ਼ਨੀ ਦਾ ਇਹ ਤਿਉਹਾਰ ਤੁਹਾਡੇ ਜੀਵਨ ਵਿੱਚ ਖੁਸ਼ੀਆਂ ਲਿਆਵੇ!",
+          victory_message:
+            "ਵਧਾਈਆਂ {name}! ਤੁਸੀਂ ਸਤਿਆਭਾਮਾ ਨੂੰ ਨਰਕਾਸੁਰ ਨੂੰ ਹਰਾਉਣ ਵਿੱਚ ਮਦਦ ਕੀਤੀ!",
+          game_instructions:
+            "ਨਿਸ਼ਾਨਾ ਲਗਾਉਣ ਲਈ ਦਬਾਓ ਤੇ ਫੜੋ, ਛੱਡਣ ਲਈ ਗੋਲੀ ਮਾਰੋ। ਸਤਿਆਭਾਮਾ ਨੂੰ ਨਰਕਾਸੁਰ ਨੂੰ ਹਰਾਉਣ ਵਿੱਚ ਮਦਦ ਕਰੋ!",
+        },
+      };
+
+      // Game variables
+      let userName = "";
+      let selectedLanguage = "en";
+      let canvas, ctx;
+      let gameState = {
+        arrows: 3,
+        enemyHealth: 5,
+        score: 0,
+        gameActive: false,
+        aiming: false,
+        aimStartX: 0,
+        aimStartY: 0,
+        arrows_in_flight: [],
+      };
+
+      // Game objects
+      let satyabhama = { x: 100, y: 200, width: 80, height: 100 };
+      let narakasura = { x: 650, y: 180, width: 100, height: 120 };
+      let particles = [];
+
+      function showStage(stageId) {
+        document.querySelectorAll(".stage").forEach((stage) => {
+          stage.classList.remove("active");
+        });
+        document.getElementById(stageId).classList.add("active");
+      }
+
+      function showDiwaliWish() {
+        userName = document.getElementById("user-name").value.trim();
+        selectedLanguage = document.getElementById("language-select").value;
+
+        if (!userName) {
+          alert("Please enter your name!");
+          return;
+        }
+
+        const wishText = translations[selectedLanguage].diwali_wish.replace(
+          "{name}",
+          userName
+        );
+        document.getElementById(
+          "diwali-message"
+        ).innerHTML = `<p>${wishText}</p>`;
+
+        showStage("wish-stage");
+        createCelebrationParticles();
+      }
+
+      function showStory() {
+        const instructionsText =
+          translations[selectedLanguage].game_instructions;
+        document.getElementById(
+          "game-instructions"
+        ).innerHTML = `<p><strong>${instructionsText}</strong></p>`;
+        showStage("story-stage");
+      }
+
+      function startGame() {
+        showStage("game-stage");
+        initializeGame();
+      }
+
+      function initializeGame() {
+        canvas = document.getElementById("game-canvas");
+        ctx = canvas.getContext("2d");
+
+        // Reset game state
+        gameState = {
+          arrows: 3,
+          enemyHealth: 5,
+          score: 0,
+          gameActive: true,
+          aiming: false,
+          aimStartX: 0,
+          aimStartY: 0,
+          arrows_in_flight: [],
+        };
+
+        updateUI();
+        setupEventListeners();
+        gameLoop();
+      }
+
+      function setupEventListeners() {
+        canvas.addEventListener("mousedown", startAiming);
+        canvas.addEventListener("mousemove", updateAim);
+        canvas.addEventListener("mouseup", shootArrow);
+
+        // Touch events for mobile
+        canvas.addEventListener("touchstart", (e) => {
+          e.preventDefault();
+          const touch = e.touches[0];
+          const rect = canvas.getBoundingClientRect();
+          const mouseEvent = new MouseEvent("mousedown", {
+            clientX: touch.clientX,
+            clientY: touch.clientY,
+          });
+          canvas.dispatchEvent(mouseEvent);
+        });
+
+        canvas.addEventListener("touchmove", (e) => {
+          e.preventDefault();
+          const touch = e.touches[0];
+          const mouseEvent = new MouseEvent("mousemove", {
+            clientX: touch.clientX,
+            clientY: touch.clientY,
+          });
+          canvas.dispatchEvent(mouseEvent);
+        });
+
+        canvas.addEventListener("touchend", (e) => {
+          e.preventDefault();
+          const mouseEvent = new MouseEvent("mouseup", {});
+          canvas.dispatchEvent(mouseEvent);
+        });
+      }
+
+      function startAiming(e) {
+        if (!gameState.gameActive || gameState.arrows <= 0) return;
+
+        const rect = canvas.getBoundingClientRect();
+        gameState.aimStartX = e.clientX - rect.left;
+        gameState.aimStartY = e.clientY - rect.top;
+        gameState.aiming = true;
+      }
+
+      function updateAim(e) {
+        if (!gameState.aiming) return;
+
+        const rect = canvas.getBoundingClientRect();
+        gameState.aimCurrentX = e.clientX - rect.left;
+        gameState.aimCurrentY = e.clientY - rect.top;
+      }
+
+      function shootArrow(e) {
+        if (!gameState.aiming || !gameState.gameActive) return;
+
+        const rect = canvas.getBoundingClientRect();
+        const endX = e.clientX - rect.left;
+        const endY = e.clientY - rect.top;
+
+        const deltaX = endX - gameState.aimStartX;
+        const deltaY = endY - gameState.aimStartY;
+        const power = Math.min(
+          Math.sqrt(deltaX * deltaX + deltaY * deltaY) / 5,
+          15
+        );
+
+        if (power > 2) {
+          const angle = Math.atan2(deltaY, deltaX);
+          gameState.arrows_in_flight.push({
+            x: satyabhama.x + satyabhama.width,
+            y: satyabhama.y + satyabhama.height / 2,
+            vx: Math.cos(angle) * power,
+            vy: Math.sin(angle) * power,
+            active: true,
+          });
+
+          gameState.arrows--;
+          updateUI();
+        }
+
+        gameState.aiming = false;
+      }
+
+      function gameLoop() {
+        if (!gameState.gameActive) return;
+
+        clearCanvas();
+        drawBackground();
+        drawCharacters();
+        updateArrows();
+        drawArrows();
+        drawAim();
+        updateParticles();
+        drawParticles();
+
+        checkGameEnd();
+        requestAnimationFrame(gameLoop);
+      }
+
+      function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+      function drawBackground() {
+        // Sky gradient
+        const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        gradient.addColorStop(0, "#87CEEB");
+        gradient.addColorStop(1, "#98FB98");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Ground
+        ctx.fillStyle = "#228B22";
+        ctx.fillRect(0, canvas.height - 50, canvas.width, 50);
+
+        // Temple in background
+        ctx.fillStyle = "#8B4513";
+        ctx.fillRect(350, 100, 100, 150);
+        ctx.fillStyle = "#FFD700";
+        ctx.beginPath();
+        ctx.moveTo(330, 100);
+        ctx.lineTo(400, 50);
+        ctx.lineTo(470, 100);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      function drawCharacters() {
+        // Draw Satyabhama
+        ctx.fillStyle = "#FF69B4";
+        ctx.fillRect(
+          satyabhama.x,
+          satyabhama.y,
+          satyabhama.width,
+          satyabhama.height
+        );
+
+        // Satyabhama's face
+        ctx.fillStyle = "#FDBCB4";
+        ctx.fillRect(satyabhama.x + 20, satyabhama.y + 10, 40, 30);
+
+        // Crown
+        ctx.fillStyle = "#FFD700";
+        ctx.fillRect(satyabhama.x + 15, satyabhama.y, 50, 15);
+
+        // Bow
+        ctx.strokeStyle = "#8B4513";
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(
+          satyabhama.x + satyabhama.width + 10,
+          satyabhama.y + 40,
+          20,
+          0.2,
+          Math.PI - 0.2
+        );
+        ctx.stroke();
+
+        // Draw Narakasura
+        ctx.fillStyle = "#800080";
+        ctx.fillRect(
+          narakasura.x,
+          narakasura.y,
+          narakasura.width,
+          narakasura.height
+        );
+
+        // Narakasura's face
+        ctx.fillStyle = "#4B0082";
+        ctx.fillRect(narakasura.x + 25, narakasura.y + 15, 50, 40);
+
+        // Horns
+        ctx.fillStyle = "#000000";
+        ctx.beginPath();
+        ctx.moveTo(narakasura.x + 30, narakasura.y + 15);
+        ctx.lineTo(narakasura.x + 20, narakasura.y);
+        ctx.lineTo(narakasura.x + 35, narakasura.y + 10);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(narakasura.x + 70, narakasura.y + 15);
+        ctx.lineTo(narakasura.x + 80, narakasura.y);
+        ctx.lineTo(narakasura.x + 65, narakasura.y + 10);
+        ctx.closePath();
+        ctx.fill();
+
+        // Health bar for Narakasura
+        const healthBarWidth = 80;
+        const healthPercentage = gameState.enemyHealth / 5;
+        ctx.fillStyle = "#FF0000";
+        ctx.fillRect(narakasura.x + 10, narakasura.y - 20, healthBarWidth, 10);
+        ctx.fillStyle = "#00FF00";
+        ctx.fillRect(
+          narakasura.x + 10,
+          narakasura.y - 20,
+          healthBarWidth * healthPercentage,
+          10
+        );
+      }
+
+      function updateArrows() {
+        gameState.arrows_in_flight.forEach((arrow, index) => {
+          if (!arrow.active) return;
+
+          arrow.x += arrow.vx;
+          arrow.y += arrow.vy;
+          arrow.vy += 0.2; // Gravity
+
+          // Check collision with Narakasura
+          if (
+            arrow.x > narakasura.x &&
+            arrow.x < narakasura.x + narakasura.width &&
+            arrow.y > narakasura.y &&
+            arrow.y < narakasura.y + narakasura.height
+          ) {
+            // Hit!
+            gameState.enemyHealth--;
+            gameState.score += 100;
+            gameState.arrows++; // Bonus arrow for hitting
+
+            createHitParticles(arrow.x, arrow.y);
+            arrow.active = false;
+            updateUI();
+          }
+
+          // Remove arrows that go off screen
+          if (
+            arrow.x > canvas.width ||
+            arrow.y > canvas.height ||
+            arrow.x < 0
+          ) {
+            arrow.active = false;
+          }
+        });
+
+        // Remove inactive arrows
+        gameState.arrows_in_flight = gameState.arrows_in_flight.filter(
+          (arrow) => arrow.active
+        );
+      }
+
+      function drawArrows() {
+        ctx.fillStyle = "#8B4513";
+        gameState.arrows_in_flight.forEach((arrow) => {
+          if (arrow.active) {
+            // Arrow shaft
+            ctx.save();
+            ctx.translate(arrow.x, arrow.y);
+            ctx.rotate(Math.atan2(arrow.vy, arrow.vx));
+            ctx.fillRect(0, -1, 25, 2);
+            // Arrow head
+            ctx.fillStyle = "#FF8C00";
+            ctx.beginPath();
+            ctx.moveTo(25, 0);
+            ctx.lineTo(20, -4);
+            ctx.lineTo(20, 4);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+            ctx.fillStyle = "#8B4513";
+          }
+        });
+      }
+
+      function drawAim() {
+        if (!gameState.aiming) return;
+
+        ctx.strokeStyle = "#FF0000";
+        ctx.lineWidth = 2;
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        ctx.moveTo(gameState.aimStartX, gameState.aimStartY);
+        ctx.lineTo(gameState.aimCurrentX, gameState.aimCurrentY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      function createHitParticles(x, y) {
+        for (let i = 0; i < 10; i++) {
+          particles.push({
+            x: x,
+            y: y,
+            vx: (Math.random() - 0.5) * 10,
+            vy: (Math.random() - 0.5) * 10,
+            life: 60,
+            color: "#FFD700",
+          });
+        }
+      }
+
+      function createCelebrationParticles() {
+        for (let i = 0; i < 20; i++) {
+          particles.push({
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            vx: (Math.random() - 0.5) * 5,
+            vy: (Math.random() - 0.5) * 5,
+            life: 120,
+            color: ["#FFD700", "#FF8C00", "#DC143C"][
+              Math.floor(Math.random() * 3)
+            ],
+          });
+        }
+      }
+
+      function updateParticles() {
+        particles.forEach((particle, index) => {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          particle.life--;
+
+          if (particle.life <= 0) {
+            particles.splice(index, 1);
+          }
+        });
+      }
+
+      function drawParticles() {
+        particles.forEach((particle) => {
+          ctx.fillStyle = particle.color;
+          ctx.globalAlpha = particle.life / 60;
+          ctx.fillRect(particle.x, particle.y, 4, 4);
+          ctx.globalAlpha = 1;
+        });
+      }
+
+      function updateUI() {
+        document.getElementById("arrows-count").textContent = gameState.arrows;
+        document.getElementById("enemy-health").textContent =
+          gameState.enemyHealth;
+        document.getElementById("score").textContent = gameState.score;
+      }
+
+      function checkGameEnd() {
+        if (gameState.enemyHealth <= 0) {
+          // Victory!
+          gameState.gameActive = false;
+          setTimeout(showVictory, 1000);
+        } else if (
+          gameState.arrows <= 0 &&
+          gameState.arrows_in_flight.length === 0
+        ) {
+          // Game Over
+          gameState.gameActive = false;
+          setTimeout(() => {
+            alert("Game Over! Narakasura escaped. Try again!");
+            resetGame();
+          }, 1000);
+        }
+      }
+
+      function showVictory() {
+        const victoryText = translations[
+          selectedLanguage
+        ].victory_message.replace("{name}", userName);
+        document.getElementById(
+          "victory-message"
+        ).innerHTML = `<p>${victoryText}</p>`;
+
+        showStage("victory-stage");
+        createVictoryFireworks();
+      }
+
+      function createVictoryFireworks() {
+        const colors = ["#FFD700", "#FF8C00", "#DC143C", "#FF69B4", "#00FF00"];
+        const victoryContainer = document.getElementById("victory-animation");
+
+        for (let i = 0; i < 15; i++) {
+          setTimeout(() => {
+            const firework = document.createElement("div");
+            firework.className = "firework";
+            firework.style.left = Math.random() * 100 + "%";
+            firework.style.top = Math.random() * 100 + "%";
+            firework.style.backgroundColor =
+              colors[Math.floor(Math.random() * colors.length)];
+            victoryContainer.appendChild(firework);
+
+            setTimeout(() => {
+              victoryContainer.removeChild(firework);
+            }, 2000);
+          }, i * 200);
+        }
+      }
+
+      function resetGame() {
+        showStage("game-stage");
+        initializeGame();
+      }
+
+      function playAgain() {
+        showStage("welcome-stage");
+        document.getElementById("user-name").value = userName;
+        document.getElementById("language-select").value = selectedLanguage;
+      }
+
+      function shareVictory() {
+        const shareText = `🎆 I just helped Devi Satyabhama defeat Narakasura in this amazing Diwali game! 🏹 Join me in celebrating the victory of light over darkness! Happy Diwali! 🪔`;
+
+        if (navigator.share) {
+          navigator.share({
+            title: "Diwali Victory!",
+            text: shareText,
+            url: window.location.href,
+          });
+        } else {
+          // Fallback for browsers that don't support Web Share API
+          navigator.clipboard
+            .writeText(shareText + " " + window.location.href)
+            .then(() => {
+              alert("Victory message copied to clipboard!");
+            });
+        }
+      }
+
+      // Initialize floating particles on page load
+      document.addEventListener("DOMContentLoaded", () => {
+        createCelebrationParticles();
+        setInterval(createCelebrationParticles, 5000);
+      });
+    </script>
+  </body>
+</html>
